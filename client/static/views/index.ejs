@@ -1,0 +1,66 @@
+<html>
+<head>
+    <title></title>
+    <style media="screen">
+      .red{
+        color: red;
+      }
+      .blue{
+        color: blue;
+      }
+      .message{
+        outline: solid 1px black;
+        margin: 10px;
+        padding: 10px;
+      }
+      .comment-form{
+        outline: 1px solid green;
+        padding: 5px;
+        margin: 5px;
+      }
+    </style>
+</head>
+<body>
+    <h1>The Dojo Message Board</h1>
+    <hr>
+    <div class="wrapper">
+        <form action='/addMessage' method='post'>
+            Name:<input type='text' name='name'><br>
+            Message:<textarea type='text' name='message'></textarea><br>
+            <input type='submit' value='Post Message'>
+        </form>
+    </div>
+    <hr>
+
+    <div>
+        <% for (var x in messages) { %>
+          <div class="message">
+            <p>Name: <span class="red"><%= messages[x].name %></span></p>
+            <p>Message: <span class="blue"><%= messages[x].message %></span></p>
+
+            <!-- <%= messages[x] %> -->
+
+            <!-- show comments -->
+            <% for (var y=0; y<messages[x].comments.length; y++) { %>
+              <p>Name: <span class="red"><%= messages[x].comments[y].name %></span></p>
+              <p>Comment: <span class="red"><%= messages[x].comments[y].comment %></span></p>
+            <% } %>
+
+            <!-- comment form -->
+            <form class="comment-form" action="/addComment/<%= messages[x]._id %>" method="post">
+              Name:<input type='text' name='name'><br>
+              Comment:<textarea type='text' name='comment'></textarea><br>
+              <input type='submit' value='Post Comment'>
+            </form>
+
+
+          </div>
+        <% } %>
+    </div>
+
+
+
+
+
+</body>
+</html>
